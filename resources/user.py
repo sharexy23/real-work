@@ -7,7 +7,7 @@ from flask_restful import Resource, reqparse
 #from flask_jwt import jwt_required
 from flask_jwt_extended import create_access_token,jwt_required
 #from flask_mail import *
-from plyer import  plyer.platforms.win.notification
+#from plyer import  plyer.platforms.win.notification
 
 class register(Resource):
     parser = reqparse.RequestParser()
@@ -82,7 +82,7 @@ class register(Resource):
 
 
 
-        notification.notify(title= "notification",message="you are succesfully registered",timeout=5)
+        #notification.notify(title= "notification",message="you are succesfully registered",timeout=5)
         return {
         'status': True,
         #'data info': user.jsonyo(),
@@ -121,7 +121,7 @@ class login(Resource):
 
 
 class account_balance(Resource):
-    #@jwt_required()
+    @jwt_required()
     def get(self, phone_number):
         user = Ujer.find_by_phone_number(phone_number)
         balance = user.account_balance
@@ -152,7 +152,7 @@ class Top_up(Resource):
                         )
 
 
-    #@jwt_required()
+    @jwt_required()
     def put(self):
         data = Top_up.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
@@ -216,7 +216,7 @@ class transfer(Resource):
                         help="every transfer needs a user"
                         )
 
-    #@jwt_required()
+    @jwt_required()
     def post(self):
         data = transfer.parser.parse_args()
 
@@ -263,7 +263,7 @@ class TransferHistory(Resource):
                         )
 
     #it seems to me that this function is cursed
-    #@jwt_required()
+    @jwt_required()
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])

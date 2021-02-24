@@ -5,4 +5,3 @@ Flask-JWT
 Flask-SQLAlchemy
 uwsgi
 psycopg2
-Plyer
