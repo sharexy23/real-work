@@ -121,7 +121,7 @@ class login(Resource):
 
 
 class account_balance(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self, phone_number):
         user = Ujer.find_by_phone_number(phone_number)
         balance = user.account_balance
@@ -216,7 +216,7 @@ class transfer(Resource):
                         help="every transfer needs a user"
                         )
 
-
+    @jwt_required()
     def post(self):
         data = transfer.parser.parse_args()
 
@@ -263,7 +263,7 @@ class TransferHistory(Resource):
                         )
 
     #it seems to me that this function is cursed
-
+    @jwt_required()
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
