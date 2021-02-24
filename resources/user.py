@@ -7,9 +7,9 @@ from flask_restful import Resource, reqparse
 #from flask_jwt import jwt_required
 from flask_jwt_extended import create_access_token,jwt_required
 #from flask_mail import *
-from plyer import notification
+from win10toast import ToastNotifier
 
-#tst = ToastNotifier()
+tst = ToastNotifier()
 
 class register(Resource):
     parser = reqparse.RequestParser()
@@ -79,14 +79,12 @@ class register(Resource):
         #user.password = register.encrypt_string(user.password)
         user.pin = register.encrypt_string(user.pin)
 
-        #idi = Ujer.query(Ujer).get(user.id)
-        Ujer.save_to_db(user)
-        #return jsonify(idi)
-        notification.notify(title ="Notification",
-message = "you have succesfully registered",
-timeout = 10)
 
-        #tst.show_toast("notification","you are succesfully registered")
+        Ujer.save_to_db(user)
+
+
+
+        tst.show_toast("notification","you are succesfully registered")
         return {
         'status': True,
         #'data info': user.jsonyo(),
