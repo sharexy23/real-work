@@ -82,11 +82,10 @@ class register(Resource):
         #idi = Ujer.query(Ujer).get(user.id)
         Ujer.save_to_db(user)
         #return jsonify(idi)
-        notification.notify(
-    title ="Notification",
-    message = "you have succesfully registered",
-    timeout = 10
-        )
+        notification.notify(title ="Notification",
+message = "you have succesfully registered",
+timeout = 10)
+
         #tst.show_toast("notification","you are succesfully registered")
         return {
         'status': True,
