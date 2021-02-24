@@ -154,7 +154,7 @@ class Top_up(Resource):
                         )
 
 
-
+    @jwt_required
     def put(self):
         data = Top_up.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
@@ -265,7 +265,7 @@ class TransferHistory(Resource):
                         )
 
     #it seems to me that this function is cursed
-    
+
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
