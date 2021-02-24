@@ -7,7 +7,7 @@ from flask_restful import Resource, reqparse
 #from flask_jwt import jwt_required
 from flask_jwt_extended import create_access_token,jwt_required
 #from flask_mail import *
-from plyer import notification
+from plyer import  plyer.platforms.win.notification
 
 class register(Resource):
     parser = reqparse.RequestParser()
