@@ -3,7 +3,7 @@ import hashlib
 from models.user import *
 #from models.transfers import Transfer
 from flask import jsonify
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, inputs
 #from flask_jwt import jwt_required
 from flask_jwt_extended import create_access_token,jwt_required
 #from flask_mail import *
@@ -37,7 +37,7 @@ class register(Resource):
                         help="This field cannot be left blank!"
                         )
     parser.add_argument('date_of_birth',
-                        type=str,
+                        type=inputs.datetime_from_iso8601,
                         required=True,
                         help="This field cannot be left blank!"
                         )
@@ -110,7 +110,7 @@ class login(Resource):
             #refresh_token= create_refresh_token(user.id)
             return {
                   'status': True,
-                  'access_token': access_token,
+                  'data': access_token,
                   'message':'you are logged in'
             },200
         return {
@@ -129,7 +129,8 @@ class account_balance(Resource):
         if user:
             return {
             'status':True,
-            'balance':balance
+            'data':balance,
+            'message':'this is your account balance'
             }
     #    return {'user': 'does not exist'}
         return {
@@ -165,7 +166,8 @@ class Top_up(Resource):
             json = user.account_balance
             return{
             'status':True,
-            'data': json
+            'data': json,
+            'message':'your ubeus accounthas been credited'
             },200
         return{
         'status': False,
@@ -268,5 +270,34 @@ class TransferHistory(Resource):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
         if user:
-            return user.jsony()
+            return {
+            'status':True,
+            'data':user.jsony(),
+            'message':'this is your transfer logs'
+            }
         return {'message':'user not found'},404
+
+
+class lookup(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('phone_number',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+
+    #it seems to me that this function is cursed
+    #@jwt_required()
+    def post(self):
+        data = TransferHistory.parser.parse_args()
+        user = Ujer.find_by_phone_number(data['phone_number'])
+        if user:
+            return {
+            'status':True,
+            'data':user.jsonyo(),
+            'message':'this is your info'
+            }
+        return {
+        'status': True,
+        'message':'user not found'
+        },404

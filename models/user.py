@@ -47,7 +47,7 @@ class Ujer(db.Model):
     def jsony(self):
         return {'transfers':[transfer.json() for transfer in self.transfers.all()]}
     def jsonyo(self):
-        return {'id':self.id}
+        return {'id':self.id,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'email':self.email}
 
     @classmethod
     def find_by_password(cls, password):
