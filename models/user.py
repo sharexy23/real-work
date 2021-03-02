@@ -15,6 +15,8 @@ class Ujer(db.Model):
     pin = db.Column(db.String(4))
 
     transfers = db.relationship('Transfer', lazy='dynamic',backref='parent')
+    topup = db.relationship('Top_up', lazy='dynamic')
+    re_transfers = db.relationship('Received_Transfer', lazy='dynamic')
 
 
 
@@ -45,7 +47,7 @@ class Ujer(db.Model):
     def json(self):
         return {'id':self.id,'phone_number':self.phone_number,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'date_of_birth':self.date_of_birth,'email':self.email}
     def jsony(self):
-        return {'transfers':[transfer.json() for transfer in self.transfers.all()]}
+        return {'transfers':[transfer.json() for transfer in self.transfers.all()],'Received_Transfer':[transfer.json() for transfer in self.re_transfers.all()],'Top_ups':[top_up.json() for top_up in self.topup.all()]}
     def jsonyo(self):
         return {'id':self.id,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'email':self.email}
 
@@ -73,6 +75,85 @@ class Ujer(db.Model):
 
 class Transfer(db.Model):
     __TableName__ = 'transfers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    source_name = db.Column(db.String(90000))
+    destination_name = db.Column(db.String(80000))
+    description = db.Column(db.String(90000))
+    destination_account = db.Column(db.String(80000))
+    source_account = db.Column(db.String(80))
+    ammount = db.Column(db.String(80))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('ujer.id'), nullable=False )
+    #local = db.relationship('Company', foreign_keys=local_id)
+    user = db.relationship('Ujer')#,# foreign_keys= user_id)
+
+
+    def __init__(self,source_name,destination_name,description,destination_account,source_account,ammount,user_id):
+        #self.id = _id
+        self.source_name = source_name
+        self.destination_name = destination_name
+        self.description = description
+        self.destination_account = destination_account
+        self.source_account = source_account
+        self.ammount = ammount
+        self.user_id = user_id
+
+
+
+        #self.verification_code = verification_code
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def json(self):
+        return {'source_name':self.source_name,'destination_name':self.destination_name,'description':self.description,'destination_account':self.destination_account,'source_account':self.source_account,'ammount':self.ammount}
+
+
+
+class Top_up(db.Model):
+    __TableName__ = 'topup'
+
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(90000))
+    destination_account = db.Column(db.String(80000))
+    ammount = db.Column(db.String(80))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('ujer.id'), nullable=False )
+    #local = db.relationship('Company', foreign_keys=local_id)
+    user = db.relationship('Ujer')#,# foreign_keys= user_id)
+
+
+    def __init__(self,description,destination_account,ammount,user_id):
+        #self.id = _i
+        self.description = description
+        self.destination_account = destination_account
+        self.ammount = ammount
+        self.user_id = user_id
+
+
+
+        #self.verification_code = verification_code
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def json(self):
+        return {'description':self.description,'destination_account':self.destination_account,'ammount':self.ammount}
+
+
+class Received_Transfer(db.Model):
+    __TableName__ = 're_transfers'
 
     id = db.Column(db.Integer, primary_key=True)
     source_name = db.Column(db.String(90000))

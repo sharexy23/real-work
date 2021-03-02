@@ -9,6 +9,7 @@ from flask_jwt_extended import create_access_token,jwt_required
 #from flask_mail import *
 #from plyer import  plyer.platforms.win.notification
 
+
 class register(Resource):
     parser = reqparse.RequestParser()
     #parser.add_argument('id',
@@ -121,15 +122,15 @@ class login(Resource):
 
 
 class account_balance(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self, phone_number):
         user = Ujer.find_by_phone_number(phone_number)
         balance = user.account_balance
-        #n =user.phone_number
+        #n =user.phone_number[x.json() for x in Received_Transfer.query.all()]
         if user:
             return {
             'status':True,
-            'data':balance,
+            'data': balance,
             'message':'this is your account balance'
             }
     #    return {'user': 'does not exist'}
@@ -139,7 +140,7 @@ class account_balance(Resource):
         },404
 
 
-class Top_up(Resource):
+class Top__up(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('phone_number',
                         type=str,
@@ -151,17 +152,24 @@ class Top_up(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
+    parser.add_argument('user_id',
+                        type= int,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
 
 
-    @jwt_required()
+    #@jwt_required()
     def put(self):
-        data = Top_up.parser.parse_args()
+        data = Top__up.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
         #user.money_in_the_bag = float(user.money_in_the_bag)
         if user:
             user.account_balance = float(user.account_balance)
             user.account_balance = data['ammount'] + user.account_balance
             user.account_balance =str(user.account_balance)
+            herky = Top_up('money transfer to your ubeus account','user.phone_number',data['ammount'],data['user_id'])
+            Top_up.save_to_db(herky)
             Ujer.save_to_db(user)
             json = user.account_balance
             return{
@@ -212,13 +220,18 @@ class transfer(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('user_id',
+    parser.add_argument('sender_id',
+                        type= int,
+                        required=True,
+                        help="every transfer needs a user"
+                        )
+    parser.add_argument('destination_id',
                         type= int,
                         required=True,
                         help="every transfer needs a user"
                         )
 
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = transfer.parser.parse_args()
 
@@ -242,8 +255,10 @@ class transfer(Resource):
             user.account_balance = user.account_balance - data['amount']
             user.account_balance = str(user.account_balance)
             destination.account_balance = str(destination.account_balance)
-            transferg = Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],data['user_id'])
+            transferg = Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],data['sender_id'])
+            transfergee = Received_Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],data['destination_id'])
             Transfer.save_to_db(transferg)
+            Received_Transfer.save_to_db(transfergee)
             Ujer.save_to_db(user)
             #user.transfers = user.transfers + ('j')
             acc = user.account_balance
@@ -265,7 +280,7 @@ class TransferHistory(Resource):
                         )
 
     #it seems to me that this function is cursed
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
@@ -291,7 +306,9 @@ class lookup(Resource):
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
+
         if user:
+            uu = user.re_transfers
             return {
             'status':True,
             'data':user.jsonyo(),
