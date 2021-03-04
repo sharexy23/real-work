@@ -12,7 +12,7 @@ class Ujer(db.Model):
     password = db.Column(db.String(80))
     account_balance = db.Column(db.String(800))
     email = db.Column(db.String(80))
-    pin = db.Column(db.String(4))
+    pin = db.Column(db.String(40))
 
     transfers = db.relationship('Transfer', lazy='dynamic',backref='parent')
     topup = db.relationship('Top_up', lazy='dynamic')
