@@ -4,7 +4,7 @@ class Ujer(db.Model):
     __tablename__ = 'ujer'
 
     id = db.Column(db.Integer, primary_key=True)
-    phone_number = db.Column(db.String(11))
+    phone_number = db.Column(db.String(110000000))
     firstname = db.Column(db.String(80))
     middlename = db.Column(db.String(80))
     lastname = db.Column(db.String(80))
@@ -12,7 +12,7 @@ class Ujer(db.Model):
     password = db.Column(db.String(80))
     account_balance = db.Column(db.String(800))
     email = db.Column(db.String(80))
-    pin = db.Column(db.String(40))
+    pin = db.Column(db.String(400))
 
     transfers = db.relationship('Transfer', lazy='dynamic',backref='parent')
     topup = db.relationship('Top_up', lazy='dynamic')
