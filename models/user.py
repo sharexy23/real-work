@@ -10,7 +10,7 @@ class Ujer(db.Model):
     lastname = db.Column(db.String(80))
     date_of_birth = db.Column(db.String(60))
     password = db.Column(db.String(80))
-    account_balance = db.Column(db.String(80000))
+    account_balance = db.Column(db.String(800))
     email = db.Column(db.String(80))
     pin = db.Column(db.String(4))
 
@@ -77,10 +77,10 @@ class Transfer(db.Model):
     __TableName__ = 'transfers'
 
     id = db.Column(db.Integer, primary_key=True)
-    source_name = db.Column(db.String(90000))
-    destination_name = db.Column(db.String(80000))
-    description = db.Column(db.String(90000))
-    destination_account = db.Column(db.String(80000))
+    source_name = db.Column(db.String(900))
+    destination_name = db.Column(db.String(800))
+    description = db.Column(db.String(900))
+    destination_account = db.Column(db.String(800))
     source_account = db.Column(db.String(80))
     ammount = db.Column(db.String(80))
 
@@ -120,8 +120,8 @@ class Top_up(db.Model):
     __TableName__ = 'topup'
 
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(90000))
-    destination_account = db.Column(db.String(80000))
+    description = db.Column(db.String(900))
+    destination_account = db.Column(db.String(800))
     ammount = db.Column(db.String(80))
 
     user_id = db.Column(db.Integer, db.ForeignKey('ujer.id'), nullable=False )
@@ -156,10 +156,10 @@ class Received_Transfer(db.Model):
     __TableName__ = 're_transfers'
 
     id = db.Column(db.Integer, primary_key=True)
-    source_name = db.Column(db.String(90000))
-    destination_name = db.Column(db.String(80000))
-    description = db.Column(db.String(90000))
-    destination_account = db.Column(db.String(80000))
+    source_name = db.Column(db.String(900))
+    destination_name = db.Column(db.String(800))
+    description = db.Column(db.String(900))
+    destination_account = db.Column(db.String(800))
     source_account = db.Column(db.String(80))
     ammount = db.Column(db.String(80))
 

@@ -77,7 +77,7 @@ class register(Resource):
 
         #user.password = register.encrypt_string(user.password)
         user.pin = register.encrypt_string(user.pin)
-        
+
 
 
         Ujer.save_to_db(user)
@@ -153,11 +153,7 @@ class Top__up(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('user_id',
-                        type= int,
-                        required=True,
-                        help="This field cannot be left blank!"
-                        )
+
 
 
     #@jwt_required()
@@ -169,7 +165,7 @@ class Top__up(Resource):
             user.account_balance = float(user.account_balance)
             user.account_balance = data['ammount'] + user.account_balance
             user.account_balance =str(user.account_balance)
-            herky = Top_up('money transfer to your ubeus account','user.phone_number',data['ammount'],data['user_id'])
+            herky = Top_up('money transfer to your ubeus account',user.phone_number,data['ammount'],user.id)
             Top_up.save_to_db(herky)
             Ujer.save_to_db(user)
             json = user.account_balance
