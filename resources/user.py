@@ -38,7 +38,7 @@ class register(Resource):
                         help="This field cannot be left blank!"
                         )
     parser.add_argument('date_of_birth',
-                        type=str,
+                         type=inputs.datetime_from_iso8601,
                         required=True,
                         help="This field cannot be left blank!"
                         )
