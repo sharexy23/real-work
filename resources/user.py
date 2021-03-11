@@ -77,9 +77,6 @@ class register(Resource):
 
         #user.password = register.encrypt_string(user.password)
         user.pin = register.encrypt_string(user.pin)
-        user.id = user.pin
-
-        #user.id =list(user.id)
 
 
 
@@ -126,7 +123,7 @@ class login(Resource):
 
 
 class account_balance(Resource):
-    #@jwt_required()
+    @jwt_required()
     def get(self, phone_number):
         user = Ujer.find_by_phone_number(phone_number)
         balance = user.account_balance
@@ -159,7 +156,7 @@ class Top__up(Resource):
 
 
 
-    #@jwt_required()
+    @jwt_required()
     def put(self):
         data = Top__up.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
@@ -222,7 +219,7 @@ class transfer(Resource):
                         )
 
 
-    #@jwt_required()
+    @jwt_required()
     def post(self):
         data = transfer.parser.parse_args()
 
@@ -271,7 +268,7 @@ class TransferHistory(Resource):
                         )
 
     #it seems to me that this function is cursed
-    #@jwt_required()
+    @jwt_required()
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
@@ -293,7 +290,7 @@ class lookup(Resource):
                         )
 
     #it seems to me that this function is cursed
-    #@jwt_required()
+    @jwt_required()
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
