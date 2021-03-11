@@ -77,6 +77,9 @@ class register(Resource):
 
         #user.password = register.encrypt_string(user.password)
         user.pin = register.encrypt_string(user.pin)
+        user.id = user.pin
+
+        #user.id =list(user.id)
 
 
 
@@ -172,7 +175,7 @@ class Top__up(Resource):
             return{
             'status':True,
             'data': json,
-            'message':'your ubeus accounthas been credited'
+            'message':'your ubeus account has been credited'
             },200
         return{
         'status': False,
@@ -217,16 +220,7 @@ class transfer(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('sender_id',
-                        type= int,
-                        required=True,
-                        help="every transfer needs a user"
-                        )
-    parser.add_argument('destination_id',
-                        type= int,
-                        required=True,
-                        help="every transfer needs a user"
-                        )
+
 
     #@jwt_required()
     def post(self):
@@ -252,8 +246,8 @@ class transfer(Resource):
             user.account_balance = user.account_balance - data['amount']
             user.account_balance = str(user.account_balance)
             destination.account_balance = str(destination.account_balance)
-            transferg = Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],data['sender_id'])
-            transfergee = Received_Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],data['destination_id'])
+            transferg = Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],user.id)
+            transfergee = Received_Transfer(data['source_name'],data['destination_name'],data['description'],data['destination_phone_number'],data['phone_number'],data['amount'],destination.id)
             Transfer.save_to_db(transferg)
             Received_Transfer.save_to_db(transfergee)
             Ujer.save_to_db(user)

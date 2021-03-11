@@ -63,9 +63,6 @@ class Ujer(db.Model):
     def find_by_phone_number(cls, phone_number):
         return cls.query.filter_by(phone_number = phone_number).first()
 
-    @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.user.id.first()
 
     @classmethod
     def find_by_pin(cls, pin):
