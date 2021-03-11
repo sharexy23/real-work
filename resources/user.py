@@ -123,7 +123,7 @@ class login(Resource):
 
 
 class account_balance(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self, phone_number):
         user = Ujer.find_by_phone_number(phone_number)
         balance = user.account_balance
