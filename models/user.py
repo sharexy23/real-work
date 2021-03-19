@@ -45,7 +45,7 @@ class Ujer(db.Model):
         db.session.commit()
 
     def json(self):
-        return {'id':self.id,'phone_number':self.phone_number,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'date_of_birth':self.date_of_birth,'email':self.email}
+        return {'id':self.id,'phone_number':self.phone_number,'first_name':self.firstname,'middle_name':self.middlename,'last_name':self.lastname,'date_of_birth':self.date_of_birth,'email':self.email}
     def rectrans(self):
         return {'Received_Transfer':[transfer.json() for transfer in self.re_transfers.all()]}
     def trans(self):

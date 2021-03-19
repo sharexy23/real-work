@@ -22,17 +22,17 @@ class register(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('firstname',
+    parser.add_argument('first_name',
                         type=str,
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('middlename',
+    parser.add_argument('middle_name',
                         type=str,
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('lastname',
+    parser.add_argument('last_name',
                         type=str,
                         required=True,
                         help="This field cannot be left blank!"
