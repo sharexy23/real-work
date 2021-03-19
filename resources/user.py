@@ -156,7 +156,7 @@ class Top__up(Resource):
 
 
 
-    @jwt_required()
+    #@jwt_required()
     def put(self):
         data = Top__up.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
@@ -219,7 +219,7 @@ class transfer(Resource):
                         )
 
 
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = transfer.parser.parse_args()
 
@@ -268,16 +268,29 @@ class TransferHistory(Resource):
                         )
 
     #it seems to me that this function is cursed
-    @jwt_required()
-    def post(self):
+    #@jwt_required()
+    def post(self,page_num):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])
         if user:
-            return {
-            'status':True,
-            'data':user.jsony(),
-            'message':'this is your transfer logs'
-            }
+            if page_num == 1:
+                return {
+                'status':True,
+                'data':user.trans(),
+                'message':'this is your transfer logs'
+                }
+            elif page_num == 2:
+                return {
+                'status':True,
+                'data':user.rectrans(),
+                'message':'this is your transfer logs'
+                }
+            elif page_num ==3:
+                return {
+                'status':True,
+                'data':user.jsony(),
+                'message':'this is your transfer logs'
+                }
         return {'message':'user not found'},404
 
 
@@ -290,7 +303,7 @@ class lookup(Resource):
                         )
 
     #it seems to me that this function is cursed
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = TransferHistory.parser.parse_args()
         user = Ujer.find_by_phone_number(data['phone_number'])

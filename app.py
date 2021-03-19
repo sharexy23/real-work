@@ -25,7 +25,7 @@ api.add_resource(login, '/login')
 api.add_resource(account_balance, '/balance/<string:phone_number>')
 api.add_resource(Top__up, '/add_money')
 api.add_resource(transfer, '/transfer')
-api.add_resource(TransferHistory, '/transactions')
+api.add_resource(TransferHistory, '/transactions/<int:page_num>')
 api.add_resource(lookup, '/lookup')
 if __name__ == '__main__':
     from db import db

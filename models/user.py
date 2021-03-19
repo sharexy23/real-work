@@ -46,8 +46,12 @@ class Ujer(db.Model):
 
     def json(self):
         return {'id':self.id,'phone_number':self.phone_number,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'date_of_birth':self.date_of_birth,'email':self.email}
+    def rectrans(self):
+        return {'Received_Transfer':[transfer.json() for transfer in self.re_transfers.all()]}
+    def trans(self):
+        return {'transfers':[transfer.json() for transfer in self.transfers.all()]}
     def jsony(self):
-        return {'transfers':[transfer.json() for transfer in self.transfers.all()],'Received_Transfer':[transfer.json() for transfer in self.re_transfers.all()],'Top_ups':[top_up.json() for top_up in self.topup.all()]}
+        return {'Top_ups':[top_up.json() for top_up in self.topup.all()]}
     def jsonyo(self):
         return {'id':self.id,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'email':self.email}
 
