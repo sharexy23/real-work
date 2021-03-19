@@ -53,7 +53,7 @@ class Ujer(db.Model):
     def jsony(self):
         return {'Top_ups':[top_up.json() for top_up in self.topup.all()]}
     def jsonyo(self):
-        return {'id':self.id,'firstname':self.firstname,'middlename':self.middlename,'lastname':self.lastname,'email':self.email}
+        return {'id':self.id,'first_name':self.firstname,'middle_name':self.middlename,'last_name':self.lastname,'email':self.email}
 
     @classmethod
     def find_by_password(cls, password):

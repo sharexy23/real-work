@@ -72,7 +72,7 @@ class register(Resource):
             'message':'user exists'
             },400
 
-        user = Ujer(data['phone_number'],data['firstname'],data['middlename'],data['lastname'],data['date_of_birth'],
+        user = Ujer(data['phone_number'],data['first_name'],data['middle_name'],data['last_name'],data['date_of_birth'],
         data['password'],data['email'],data['pin'],'00')
 
         #user.password = register.encrypt_string(user.password)
